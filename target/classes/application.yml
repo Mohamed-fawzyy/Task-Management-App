@@ -1,0 +1,65 @@
+# This file holds shared defaults that apply to all environments unless overridden by a specific profile.
+# do this deploy:- mvn clean install -D   skipTests
+server:
+  port: 8181
+  error:
+    include-message: always
+
+spring:
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/task_management
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: root
+
+  application:
+    name: Task-Management
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
+  jpa:
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+    validate-on-migrate: true
+    clean-on-validation-error: false
+
+jwt:
+  access-token:
+    secret: ${SECRET_ACCESS_TOKEN}
+    expiration: ${EXPIRY_ACCESS_TOKEN}      # 15 minutes
+  refresh-token:
+    secret: ${SECRET_REFRESH_TOKEN}
+    expiration: ${EXPIRY_REFRESH_TOKEN}   # 5 days
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+
+logging:
+  level:
+    root: warn
+    org.springframework.security: debug
+    org.hibernate.sql: debug
+    org.hibernate.type.descriptor.sql: trace
+    org.hibernate.orm.jdbc.bind: trace
+    org.hibernate.type.descriptor.sql.BasicBinder: trace
+    com.trading.TT_N: info
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} [%X{requestId}] - %msg%n"
+
+
