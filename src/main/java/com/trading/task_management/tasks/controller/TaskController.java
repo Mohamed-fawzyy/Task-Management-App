@@ -15,7 +15,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 import org.springframework.data.domain.Page;
@@ -47,13 +46,53 @@ public class TaskController {
         User user = authenticatedUserUtil.getCurrentUser();
         int page = pageReq.getPage();
         int size = pageReq.getSize();
-        String sortBy = (pageReq.getSortBy() != null && !pageReq.getSortBy().isBlank()) ? pageReq.getSortBy() : "dueDate";
+        pageReq.getSortBy();
+        String sortBy = !pageReq.getSortBy().isBlank() ? pageReq.getSortBy() : "dueDate";
         Page<TaskResponse> taskPages = taskService.getTasks(user.getId(), page, size, sortBy);
 
         String message = taskPages.isEmpty() ?
                 "No tasks found for this user." :
                 String.format("Successfully retrieved %d tasks (sorted by: %s)",
                         taskPages.getTotalElements(),
+                        sortBy
+                );
+
+        return ResponseEntity.ok(
+                CustomApiResponse.of(
+                        HttpStatus.OK.value(),
+                        message,
+                        PaginationResponse.of(taskPages)
+                )
+        );
+    }
+
+    @Operation(
+            summary = "Search tasks by title for the authenticated user",
+            description = "Returns a paginated and sorted list of tasks that match the search term in their title. Defaults: page=0, size=10, sortBy=dueDate.",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Search results returned successfully")
+            }
+    )
+    @GetMapping("/v1/tasks/search")
+    public ResponseEntity<CustomApiResponse<PaginationResponse<TaskResponse>>> searchTasksByTitle(
+            @Parameter(description = "Search term for task title", required = true)
+            @RequestParam String title,
+
+            @Parameter(description = "Pagination and sorting parameters", required = true)
+            @Valid PaginationRequest pageReq
+    ) {
+        User user = authenticatedUserUtil.getCurrentUser();
+        int page = pageReq.getPage();
+        int size = pageReq.getSize();
+        pageReq.getSortBy();
+        String sortBy = !pageReq.getSortBy().isBlank() ? pageReq.getSortBy() : "dueDate";
+        Page<TaskResponse> taskPages = taskService.searchTasksByTitle(user.getId(), title, page, size, sortBy);
+
+        String message = taskPages.isEmpty() ?
+                String.format("No tasks found matching '%s'.", title) :
+                String.format("Found %d tasks matching '%s' (sorted by: %s)",
+                        taskPages.getTotalElements(),
+                        title,
                         sortBy
                 );
 

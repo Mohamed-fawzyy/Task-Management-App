@@ -23,4 +23,5 @@ public interface TaskService {
     TaskResponse createTaskForUser(TaskRequest request, User user);
     TaskResponse updateTaskForUser(UUID id, TaskUpdateRequest request, User user);
     Page<TaskResponse> getTasks(UUID userId, int page, int size, String sortBy);
+    Page<TaskResponse> searchTasksByTitle(UUID userId, String title, int page, int size, String sortBy);
 }

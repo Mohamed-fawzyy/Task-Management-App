@@ -13,4 +13,5 @@ import java.util.UUID;
 public interface TaskRepository extends JpaRepository<Task, UUID> {
     List<Task> findByUserId(UUID userId);
     Page<Task> findByUserId(UUID id, Pageable pageable);
+    Page<Task> findByUserIdAndTitleContainingIgnoreCase(UUID userId, String title, Pageable pageable);
 }

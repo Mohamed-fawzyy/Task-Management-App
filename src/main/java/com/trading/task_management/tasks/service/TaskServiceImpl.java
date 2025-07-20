@@ -98,6 +98,28 @@ public class TaskServiceImpl implements TaskService {
     }
 
     /**
+     * Searches for tasks by title for the specified user.
+     *
+     * @param userId The ID of the user whose tasks are to be searched.
+     * @param title The search term for the task title.
+     * @param page The page number (0-based).
+     * @param size The number of items per page.
+     * @param sortBy The field to sort by (e.g., "dueDate").
+     * @return A Page of TaskResponse DTOs matching the search criteria.
+     */
+    @Override
+    public Page<TaskResponse> searchTasksByTitle(UUID userId, String title, int page, int size, String sortBy) {
+        Pageable pageable = PaginationUtil.createPageable(
+                page, size, sortBy,
+                PaginationUtil.SortFields.TASKS_FIELDS,
+                PaginationUtil.DefaultSortFields.TASKS,
+                Sort.Direction.ASC
+        );
+        Page<Task> pageResult = taskRepository.findByUserIdAndTitleContainingIgnoreCase(userId, title, pageable);
+        return pageResult.map(this::toResponse);
+    }
+
+    /**
      * Creates a new task for the specified user.
      *
      * @param request The task creation request DTO.
