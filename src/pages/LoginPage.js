@@ -38,7 +38,7 @@ const LoginPage = () => {
     dispatch(resetError());
     const result = await dispatch(login(form));
     if (login.fulfilled.match(result)) {
-      navigate('/');
+      navigate('/dashboard');
     }
   };
 
@@ -58,7 +58,7 @@ const LoginPage = () => {
             value={form.email}
             onChange={handleChange}
             onBlur={handleBlur}
-            className={`shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ${errors.email && touched.email ? 'border-red-500' : ''}`}
+            className={`shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600 ${errors.email && touched.email ? 'border-red-500' : ''}`}
             autoComplete="email"
           />
           {errors.email && touched.email && (
@@ -73,7 +73,7 @@ const LoginPage = () => {
             value={form.password}
             onChange={handleChange}
             onBlur={handleBlur}
-            className={`shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ${errors.password && touched.password ? 'border-red-500' : ''}`}
+            className={`shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600 ${errors.password && touched.password ? 'border-red-500' : ''}`}
             autoComplete="current-password"
           />
           {errors.password && touched.password && (

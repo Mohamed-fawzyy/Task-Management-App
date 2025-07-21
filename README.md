@@ -1,70 +1,153 @@
-# Getting Started with Create React App
+# Tasks Management Dashboard
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+---
 
-## Available Scripts
+## 🚀 Features & Usage
 
-In the project directory, you can run:
+### ✨ Modern, Secure Task Management App
 
-### `npm start`
+This project is a **production-ready ReactJS dashboard** for managing tasks, built with:
+- **React 18** + **Redux Toolkit** for state management
+- **TailwindCSS** for beautiful, responsive UI with dark mode support
+- **Axios** for secure API calls with automatic token refresh
+- **React Router v6** for navigation
+- **Spring Boot** backend (see `/api/task-management` endpoints)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 🔐 **Authentication Pages**
+- **Register**: Create a new user (first name, last name, email, password)
+  - Form validation, error handling, and success redirect to login
+  - User details stored for personalized greeting
+- **Login**: Secure login with email and password
+  - Form validation, error handling, and redirect to dashboard
+  - User details retrieved for personalized greeting
+- **JWT-based Auth**: Access/refresh tokens are securely managed with automatic refresh
+- **Logout**: Invalidate session and clear tokens
+- **Token Management**: Automatic token refresh on expiration, silent retry of failed requests
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 🗂️ **Dashboard & Task Management**
+- **Dashboard**: View your tasks in a clean, responsive layout
+  - **Search functionality**: Real-time search by task title with debounced input
+  - **Pagination**: Navigate through large task lists (10 items per page)
+  - **Sorting**: Sort by due date, title, priority, or status
+  - **User greeting**: Personalized welcome message with user's name or email
+  - **Dark mode toggle**: Switch between light and dark themes
+  - **Responsive design**: Works perfectly on desktop, tablet, and mobile
+- **Create Task**: Add new tasks with title, description, due date, and priority
+  - Form validation with real-time feedback
+  - Date picker with minimum date validation
+  - Error handling with user-friendly messages
+- **Edit Task**: Update existing tasks with all fields including status
+  - Pre-populated form with current task data
+  - Status management (Pending, In Progress, Completed)
+- **Task Details**: View complete task information
+  - **Delete functionality**: Red delete button to remove tasks
+  - Confirmation and error handling for deletions
+- **Task Actions**: View and Edit buttons for each task
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 🌙 **UI/UX Enhancements**
+- **Dark Mode**: Complete dark theme support with proper contrast
+  - Toggle between light and dark modes
+  - Persistent theme preference
+  - Proper text contrast in all input fields
+- **TailwindCSS**: Modern, mobile-first design
+- **Responsive Design**: Optimized for all screen sizes
+- **Form Styling**: Consistent input styling with proper dark mode support
+- **Button States**: Loading states, disabled states, and hover effects
+- **Error Handling**: User-friendly error messages and validation feedback
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 🔍 **Search & Filtering**
+- **Real-time Search**: Debounced search by task title
+  - Backend-powered search endpoint integration
+  - Instant results as you type
+- **Pagination Controls**: Previous/Next buttons with page information
+- **Sort Options**: Sort by due date, title, priority, or status
+- **Status Indicators**: Color-coded priority and status badges
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 🛠️ **Getting Started**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. **Install dependencies:**
+   ```sh
+   npm install
+   ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+2. **Start the development server:**
+   ```sh
+   npm start
+   ```
+   The app runs at [http://localhost:3000](http://localhost:3000)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+3. **Build for production:**
+   ```sh
+   npm run build
+   ```
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 🔗 **Backend API Integration**
+- **Base URL**: Configured to connect to Spring Boot backend
+- **Authentication**: JWT token management with automatic refresh
+- **API Endpoints**: 
+  - Task CRUD operations
+  - Search functionality (`/v1/tasks/search`)
+  - Pagination and sorting support
+- **Error Handling**: Comprehensive error handling for network issues and API errors
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
 
-### Code Splitting
+## 📄 **Project Structure**
+- `src/pages/` — Main app pages (Login, Register, Dashboard, CreateTask, EditTask, TaskDetails)
+- `src/components/` — Reusable UI components
+- `src/store/` — Redux Toolkit store and slices (auth, tasks)
+- `src/services/` — API service modules (authService, tasksService)
+- `src/hooks/` — Custom React hooks
+- `src/utils/` — Utility functions and helpers
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+---
 
-### Analyzing the Bundle Size
+## 🆕 **Recent Updates & Features**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### **Authentication Enhancements**
+- ✅ User details storage and retrieval for personalized experience
+- ✅ Automatic token refresh on expiration
+- ✅ Silent retry of failed requests due to token expiration
+- ✅ Improved error handling for authentication failures
 
-### Making a Progressive Web App
+### **Task Management Improvements**
+- ✅ **Search functionality**: Backend-powered search by task title
+- ✅ **Delete task**: Red delete button in task details view
+- ✅ **Enhanced pagination**: Better page navigation with total count
+- ✅ **Improved sorting**: Multiple sort options with visual feedback
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### **UI/UX Improvements**
+- ✅ **Dark mode**: Complete dark theme with proper contrast
+- ✅ **Form styling**: Consistent input styling across all forms
+- ✅ **Responsive design**: Mobile-optimized layout
+- ✅ **Loading states**: Better user feedback during operations
+- ✅ **Error handling**: Comprehensive error messages and validation
 
-### Advanced Configuration
+### **Technical Improvements**
+- ✅ **Debounced search**: Performance optimization for search input
+- ✅ **Token management**: Robust JWT token handling
+- ✅ **State management**: Improved Redux store structure
+- ✅ **API integration**: Better error handling and response processing
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+---
 
-### Deployment
+## 💡 **Contributing & Customization**
+- Fork, clone, and PRs welcome!
+- Easily extend with new features, themes, or integrations
+- Follow existing patterns for consistency
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+---
 
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+**Enjoy your modern, secure, and beautiful task management dashboard!**

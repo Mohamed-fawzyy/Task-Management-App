@@ -10,9 +10,6 @@ const initialState = {
     status: '',
     priority: '',
     search: '',
-    page: 1,
-    size: 10,
-    sortBy: 'dueDate',
   },
 };
 
@@ -25,12 +22,47 @@ export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async (params, th
   }
 });
 
+export const searchTasks = createAsyncThunk('tasks/searchTasks', async ({ title, params }, thunkAPI) => {
+  try {
+    const data = await tasksService.searchTasks(title, params);
+    return data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.response?.data?.message || 'Failed to search tasks');
+  }
+});
+
 export const createTask = createAsyncThunk('tasks/createTask', async (task, thunkAPI) => {
   try {
     const data = await tasksService.createTask(task);
     return data;
   } catch (error) {
-    return thunkAPI.rejectWithValue(error.response?.data?.message || 'Failed to create task');
+    let errMsg = error.response?.data?.message;
+    if (!errMsg && error.response?.data) {
+      if (typeof error.response.data === 'string') {
+        errMsg = error.response.data;
+      } else if (typeof error.response.data === 'object') {
+        errMsg = Object.values(error.response.data).join(' ');
+      }
+    }
+    
+    // Extract only the relevant part of the error message
+    if (errMsg && typeof errMsg === 'string') {
+      if (errMsg.includes('Invalid request:')) {
+        // Extract just the "Invalid request:" part and the field name
+        const match = errMsg.match(/Invalid request: ([^(]+)/);
+        if (match) {
+          errMsg = `Invalid request: ${match[1].trim()}`;
+        }
+      } else if (errMsg.includes('Unrecognized field')) {
+        // Extract just the "Unrecognized field" part
+        const match = errMsg.match(/(Unrecognized field [^(]+)/);
+        if (match) {
+          errMsg = match[1];
+        }
+      }
+    }
+    
+    return thunkAPI.rejectWithValue(errMsg || 'Failed to create task');
   }
 });
 
@@ -39,7 +71,15 @@ export const updateTask = createAsyncThunk('tasks/updateTask', async ({ id, task
     const data = await tasksService.updateTask(id, task);
     return data;
   } catch (error) {
-    return thunkAPI.rejectWithValue(error.response?.data?.message || 'Failed to update task');
+    let errMsg = error.response?.data?.message;
+    if (!errMsg && error.response?.data) {
+      if (typeof error.response.data === 'string') {
+        errMsg = error.response.data;
+      } else if (typeof error.response.data === 'object') {
+        errMsg = Object.values(error.response.data).join(' ');
+      }
+    }
+    return thunkAPI.rejectWithValue(errMsg || 'Failed to update task');
   }
 });
 
@@ -71,10 +111,23 @@ const tasksSlice = createSlice({
       })
       .addCase(fetchTasks.fulfilled, (state, action) => {
         state.loading = false;
-        state.tasks = action.payload.tasks;
-        state.total = action.payload.total;
+        state.tasks = action.payload?.response?.data || [];
+        state.total = action.payload?.response?.totalElements || 0;
       })
       .addCase(fetchTasks.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(searchTasks.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(searchTasks.fulfilled, (state, action) => {
+        state.loading = false;
+        state.tasks = action.payload?.response?.data || [];
+        state.total = action.payload?.response?.totalElements || 0;
+      })
+      .addCase(searchTasks.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })

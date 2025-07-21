@@ -63,7 +63,7 @@ const RegisterPage = () => {
             value={form.firstName}
             onChange={handleChange}
             onBlur={handleBlur}
-            className={`shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ${errors.firstName && touched.firstName ? 'border-red-500' : ''}`}
+            className={`shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600 ${errors.firstName && touched.firstName ? 'border-red-500' : ''}`}
             autoComplete="given-name"
           />
           {errors.firstName && touched.firstName && (
@@ -78,7 +78,7 @@ const RegisterPage = () => {
             value={form.lastName}
             onChange={handleChange}
             onBlur={handleBlur}
-            className={`shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ${errors.lastName && touched.lastName ? 'border-red-500' : ''}`}
+            className={`shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600 ${errors.lastName && touched.lastName ? 'border-red-500' : ''}`}
             autoComplete="family-name"
           />
           {errors.lastName && touched.lastName && (
@@ -93,7 +93,7 @@ const RegisterPage = () => {
             value={form.email}
             onChange={handleChange}
             onBlur={handleBlur}
-            className={`shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ${errors.email && touched.email ? 'border-red-500' : ''}`}
+            className={`shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600 ${errors.email && touched.email ? 'border-red-500' : ''}`}
             autoComplete="email"
           />
           {errors.email && touched.email && (
@@ -108,7 +108,7 @@ const RegisterPage = () => {
             value={form.password}
             onChange={handleChange}
             onBlur={handleBlur}
-            className={`shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ${errors.password && touched.password ? 'border-red-500' : ''}`}
+            className={`shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600 ${errors.password && touched.password ? 'border-red-500' : ''}`}
             autoComplete="new-password"
           />
           {errors.password && touched.password && (
